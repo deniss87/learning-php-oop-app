@@ -1,0 +1,42 @@
+.
+├── config
+│   ├── bootstrap.php
+│   ├── config.php
+│   └── env.php
+├── .env
+├── .gitignore
+├── public
+│   ├── add-product
+│   │   └── index.php
+│   ├── css
+│   │   ├── add.css
+│   │   ├── index.css
+│   │   └── main.css
+│   ├── images
+│   │   ├── book.png
+│   │   ├── furniture.svg
+│   │   ├── movie.svg
+│   │   └── no-product-found.png
+│   ├── index.php
+│   └── scripts
+│       └── script.js
+├── README.md
+├── src
+│   ├── classes
+│   ├── Controllers
+│   ├── Helpers
+│   │   └── functions.php
+│   ├── Models
+│   │   ├── Book.class.php
+│   │   ├── Category.class.php
+│   │   ├── DVD.class.php
+│   │   ├── Furniture.class.php
+│   │   ├── Product.class.php
+│   │   └── ProductList.class.php
+│   └── Services
+│       ├── Database.class.php
+│       ├── DatabaseObject.class.php
+│       └── Validation.class.php
+└── structure.txt
+
+13 directories, 27 files

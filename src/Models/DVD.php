@@ -1,4 +1,5 @@
 <?php
+namespace App\Models;
 
 class DVD extends Product {
     public $size;
@@ -15,5 +16,3 @@ class DVD extends Product {
     }
 
 }
-
-?>

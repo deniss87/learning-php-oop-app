@@ -1,4 +1,7 @@
 <?php
+namespace App\Services;
+use PDO;
+use PDOException;
 
 class Database {
     static protected $conn;
@@ -29,5 +32,4 @@ class Database {
         return self::$conn;
     }
     
-} // end
-?>
+}

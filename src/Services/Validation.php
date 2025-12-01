@@ -1,4 +1,7 @@
 <?php
+namespace App\Services;
+use App\Models\Product;
+use App\Models\Category;
 
 class Validation {
 
@@ -54,5 +57,3 @@ class Validation {
         return true;
     }
 }
-
-?>

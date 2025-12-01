@@ -1,4 +1,5 @@
 <?php
+namespace App\Models;
 
 class Furniture extends Product {
     public $height;
@@ -19,5 +20,3 @@ class Furniture extends Product {
     }
     
 }
-
-?>

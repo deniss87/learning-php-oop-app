@@ -1,4 +1,5 @@
 <?php
+namespace App\Models;
 
 class Book extends Product {
     public $weight;
@@ -14,5 +15,3 @@ class Book extends Product {
     }
 
 }
-
-?>

@@ -1,4 +1,7 @@
 <?php
+namespace App\Services;
+use PDO;
+use PDOException;
 
 abstract class DatabaseObject {
 
@@ -143,6 +146,4 @@ abstract class DatabaseObject {
     }
 
 
-} 
-
-?>
+}

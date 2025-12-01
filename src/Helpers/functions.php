@@ -19,5 +19,3 @@ function array_empty_val($array) {
     }
     return $result;
 }
-
-?>

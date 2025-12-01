@@ -1,6 +1,9 @@
 <?php 
 session_start();
 require_once(__DIR__ . '/../../config/bootstrap.php'); 
+use App\Services\Validation;
+use App\Models\Category;
+use App\Models\Product;
 
 $args['product_sku']= '';
 $args['product_name']='';

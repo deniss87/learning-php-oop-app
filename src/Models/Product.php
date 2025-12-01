@@ -1,4 +1,6 @@
 <?php
+namespace App\Models;
+use App\Services\DatabaseObject;
 
 class Product extends DatabaseObject {
 
@@ -64,5 +66,3 @@ class Product extends DatabaseObject {
 
     
 }
-
-?>

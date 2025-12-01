@@ -1,4 +1,6 @@
 <?php
+namespace App\Models;
+use App\Models\Product;
 
 class ProductList extends Product {
     public $size;
@@ -56,5 +58,3 @@ class ProductList extends Product {
     }
     
 }
-
-?>

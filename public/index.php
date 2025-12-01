@@ -1,6 +1,9 @@
 <?php 
 session_start();
 require_once __DIR__ . '/../config/bootstrap.php';
+use App\Models\ProductList;
+use App\Models\Product;
+
 $productList = ProductList::find_all();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
