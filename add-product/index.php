@@ -29,7 +29,6 @@ $categoryList = Category::find_all();
 
 <!DOCTYPE html>
 <html lang="en">
-<!-- HTML HEAD -->
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -38,9 +37,7 @@ $categoryList = Category::find_all();
   <link rel="stylesheet" href="../css/add.css">
   <script src="../src/scripts/script.js"></script>
 </head>
-<!-- HTML BODY -->
 <body>
-<!-- Header -->
 <div class="header">
   <div class="header-main header-left"><h1>Add Product</h1></div> 
   <div class="header-main header-right">
@@ -48,14 +45,13 @@ $categoryList = Category::find_all();
     <a href='../'><button class="button">Cancel</button></a>
   </div>
 </div>
-<!-- end of Header -->
+
  
 <div class="wrapper">
 <!-- Message box -->
   <div class="message">
       <div class="message-text"> <?php flashMessages(); ?> </div>
  </div>
-<!-- end -->  
 
  <!-- Main Content -->
 <div class="form-container">
@@ -133,14 +129,14 @@ $categoryList = Category::find_all();
 </form>
 </div>
 <script> showProductSpecs();</script>
- <!-- end -->
+
 <!-- Footer -->
 <div class="push"></div>
 </div>
 <footer class="footer">
     <div class="footer-text">Scandiweb Test assignment</div>
 </footer>
-<!-- end -->
+
 </body>
-<!-- HTML END -->
+
 </html>

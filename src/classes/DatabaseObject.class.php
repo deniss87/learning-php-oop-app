@@ -18,7 +18,6 @@ abstract class DatabaseObject {
           return false;
         } 
 
-        // results into objects
         $object_array  = [];
         $class_name = get_called_class();
 
@@ -61,14 +60,12 @@ abstract class DatabaseObject {
 
         $attributes = self::attributes();
 
-        // Pepare SQL statement
         $sql = "INSERT INTO ".static::$table_name." (";
         $sql .= join(', ', array_keys($attributes));
         $sql .= ") VALUES (:";
         $sql .= join(', :', array_keys($attributes));
         $sql .= ")";
 
-        // Create record in database
         try {
           $stmt = self::$database->prepare($sql);
           $stmt->execute($attributes);
@@ -97,13 +94,13 @@ abstract class DatabaseObject {
       return $result;
     }
     public function save() {
-        // A new record will not have an ID 
         if(isset($this->id)) {
           return $this->update();
         } else {
           return $this->create();
         }
     }
+
     static public function delete() {
 
       $sql = "DELETE FROM ".static::$table_name." ";
@@ -112,7 +109,6 @@ abstract class DatabaseObject {
       $sql .= "')";
       $count = count($_POST['product']);
 
-      // Delete record in database
       try {
         $stmt = self::$database->prepare($sql);
         $stmt->execute();
@@ -129,7 +125,7 @@ abstract class DatabaseObject {
       }
       
     }
-      // Properties which have database columns, excluding ID
+
     static public function attributes() {
       $attributes = [];
       $post_array = $_POST['product'];
@@ -148,6 +144,6 @@ abstract class DatabaseObject {
     }
 
 
-} // end
+} 
 
 ?>

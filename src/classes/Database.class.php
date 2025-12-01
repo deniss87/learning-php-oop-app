@@ -17,7 +17,6 @@ class Database {
                                        dbname={$this->db_name}", 
                                        "{$this->db_user}", "{$this->db_pwd}");
                 $connection -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                //echo "<p style='color:green'>connected to database<p>";
                 self::$conn = $connection;
             }
             catch(PDOException $e){

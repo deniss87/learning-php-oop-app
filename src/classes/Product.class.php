@@ -63,6 +63,6 @@ class Product extends DatabaseObject {
     }
 
     
-} // end
+}
 
 ?>

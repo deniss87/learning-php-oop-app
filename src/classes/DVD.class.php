@@ -14,6 +14,6 @@ class DVD extends Product {
         return static::find_by_sql($sql);
     }
 
-} // end
+}
 
 ?>

@@ -26,13 +26,11 @@ body {
 .header-left {
   text-align: left;
   padding-left: 40px;
-  /* background-color: red; */
 }
 .header-right {
   text-align: right;
   padding-top: 15px;
   padding-right: 13%;
-  /* background-color: blue; */
 }
 .header-sort {
   text-align: right;
