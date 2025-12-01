@@ -1,6 +1,6 @@
 <?php 
 session_start();
-require_once('../src/initialize.php'); 
+require_once(__DIR__ . '/../../config/bootstrap.php'); 
 
 $args['product_sku']= '';
 $args['product_name']='';
@@ -35,7 +35,7 @@ $categoryList = Category::find_all();
   <title>Product add</title>
   <link rel="stylesheet" href="../css/main.css">
   <link rel="stylesheet" href="../css/add.css">
-  <script src="../src/scripts/script.js"></script>
+  <script src="../scripts/script.js"></script>
 </head>
 <body>
 <div class="header">
@@ -134,7 +134,7 @@ $categoryList = Category::find_all();
 <div class="push"></div>
 </div>
 <footer class="footer">
-    <div class="footer-text">Scandiweb Test assignment</div>
+    <div class="footer-text">Simple CRUD App (PHP OOP)</div>
 </footer>
 
 </body>

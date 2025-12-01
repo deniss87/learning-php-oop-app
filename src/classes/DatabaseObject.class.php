@@ -4,7 +4,6 @@ abstract class DatabaseObject {
 
     static protected $database;
     static protected $table_name = "";
-    // static protected $columns = [];
 
     static public function set_database($database) {
         self::$database = $database;
@@ -129,7 +128,7 @@ abstract class DatabaseObject {
     static public function attributes() {
       $attributes = [];
       $post_array = $_POST['product'];
-      print_r($post_array);
+
       foreach($post_array as $key=> $value) {
           if (array_search($key, static::$db_columns)) {
               if ($value !== '') {

@@ -1,6 +1,6 @@
 <?php 
 session_start();
-require_once('src/initialize.php'); 
+require_once __DIR__ . '/../config/bootstrap.php';
 $productList = ProductList::find_all();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -25,10 +25,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Product List</title>
+  <title>Simple CRUD App (PHP OOP)</title>
   <link rel="stylesheet" href="./css/main.css">
   <link rel="stylesheet" href="./css/index.css">
-  <script src="./src/scripts/script.js"></script>
+  <script src="./scripts/script.js"></script>
 </head>
 <!-- end -->
 
@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       echo '</div>';
       echo '<div class="push"></div> </div>';
       echo '<footer class="footer">';
-      echo '<div class="footer-text">Scandiweb Test assignment</div>';
+      echo '<div class="footer-text">Simple CRUD App (PHP OOP)</div>';
       echo '</footer>';      
       exit;
     } 
@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <div class="push"></div>
 </div>
 <footer class="footer">
-    <div class="footer-text">Scandiweb Test assignment</div>
+    <div class="footer-text">Simple CRUD App (PHP OOP)</div>
 </footer>
 <script>
   formSortSelect();
