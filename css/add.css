@@ -1,0 +1,70 @@
+body {
+  background-color: #f2f2f2;
+}
+.header-left {
+  text-align: right;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+  width: 100%;
+  padding: 10px 10px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+select:focus {
+  outline: none !important;
+  border: 2px solid red;
+}
+
+.form-container {
+  display: grid;
+  grid-template-columns: auto;
+  row-gap: 5px;
+  width: 350px;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.product-type-desc {
+  background-color: rgba(255, 0, 0, 0.15);
+  font-style: italic;
+  color: rgb(0, 0, 0);
+  font-size: medium;
+  text-align: center;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+#DVD,
+#Book,
+#Furniture {
+  display: none;
+  padding-bottom: 50px;
+}
+
+@media only screen and (max-width: 450px) {
+  input[type="text"],
+  input[type="number"],
+  select {
+    width: 100%;
+    padding: 10px 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    text-align: center;
+  }
+
+  .form-container {
+    width: 250px;
+  }
+}
