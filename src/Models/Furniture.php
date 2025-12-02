@@ -2,16 +2,30 @@
 namespace App\Models;
 
 class Furniture extends Product {
-    public $height;
-    public $width;
-    public $length;
+    public $product_height;
+    public $product_width;
+    public $product_length;
+
+    protected static $db_columns = [
+        'product_id',
+        'product_sku',
+        'product_name',
+        'product_price',
+        'category_id',
+        'product_height',
+        'product_width',
+        'product_length'
+    ];
 
     public function __construct($args=[]) {
-        $this->height = $args['product_height'] ?? '';
-        $this->width = $args['product_width'] ?? '';
-        $this->length = $args['product_length'] ?? '';
+        parent::__construct($args); 
+        $this->product_height = $args['product_height'] ?? null; 
+        $this->product_width = $args['product_width'] ?? null; 
+        $this->product_length = $args['product_length'] ?? null; 
+    }
 
-        array_push(self::$db_columns, "product_height", "product_width", "product_length");
+    public static function getColumns(): array { 
+        return static::$db_columns; 
     }
 
     static public function find_all() {

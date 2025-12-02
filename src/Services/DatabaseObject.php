@@ -5,145 +5,148 @@ use PDOException;
 
 abstract class DatabaseObject {
 
-    static protected $database;
-    static protected $table_name = "";
+    protected static $db;
+    protected static $table_name = '';
+    protected static $primary_key = 'id';
+    protected static $db_columns = [];
+    public $errors = [];
 
-    static public function set_database($database) {
-        self::$database = $database;
+    public static function set_database(PDO $pdo) {
+      static::$db = $pdo;
     }
-    static public function find_by_sql($sql) {
-        $stmt= self::$database->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        if(empty($result)) {
-          return false;
-        } 
-
-        $object_array  = [];
-        $class_name = get_called_class();
-
-        for ($i=0; $i<count($result); $i++) {
-            $object_arg = [];
-            foreach ($result[$i] as $key => $value) {
-                $object_arg += [$key => $value];
-            }
-            $object_array[] = new $class_name($object_arg);
-        }
-
-        return $object_array;  
-    } 
-    static public function find_all() {
-            $sql = "SELECT * FROM ". static::$table_name;
-            return static::find_by_sql($sql);
+    public function __construct($args = []) {
+      foreach(static::$db_columns as $col) {
+          $this->$col = $args[$col] ?? null;
+      }
     }
+
+    // Find record by ID
     static public function find_by_id($id_column, $id_value) {
-      $sql = "SELECT * FROM " . static::$table_name . "  ";
-      $sql .= "WHERE ".$id_column."='".$id_value."'";
-      $obj_array = static::find_by_sql($sql);
-  
+      $sql = "SELECT * FROM " . static::$table_name;
+      $sql .= " WHERE " . $id_column . " = :id";
+      $stmt = self::$db->prepare($sql);
+      $stmt->bindValue(':id', $id_value);
+      $stmt->execute();
+      $obj_array = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
       if(!empty($obj_array)) {
-        return array_shift($obj_array);
+          $class_name = get_called_class();
+          return new $class_name($obj_array[0]);
+      } else {
+          return false;
       }
-      else {
-        return false;
+    }
+
+    // Find ALL records
+    public static function find_all() {
+      $sql = "SELECT * FROM " . static::$table_name;
+      return static::find_by_sql($sql);
+    }
+
+
+    // Find by SQL statement
+
+    protected static function find_by_sql(string $sql, array $params = []) {
+      try {
+        $stmt = static::$db->prepare($sql);
+        $stmt->execute($params);
+
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if (!$rows) return [];
+
+        $class = get_called_class();
+        return array_map(fn($row) => new $class($row), $rows);
+
+      } catch (PDOException $e) {
+          throw new \Exception("Database query error: " . $e->getMessage());
       }
     }
-    static public function count() {
 
-        $sql = "SELECT COUNT(*) FROM ". static::$table_name;
-        $stmt= self::$database->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        return array_shift($result);
-    }
-    static public function create() {
-
-        $attributes = self::attributes();
-
-        $sql = "INSERT INTO ".static::$table_name." (";
-        $sql .= join(', ', array_keys($attributes));
-        $sql .= ") VALUES (:";
-        $sql .= join(', :', array_keys($attributes));
-        $sql .= ")";
-
-        try {
-          $stmt = self::$database->prepare($sql);
-          $stmt->execute($attributes);
-          $_SESSION['success'] = "New product has been added";
-          return true;
-        }
-        catch (PDOException $e){
-            die("Failed to add product: " . $e->getMessage());
-        }
-    }
-    protected function update() {
-      $this->validate();
-      if(!empty($this->errors)) { return false; }
-  
-      $attributes = $this->sanitized_attributes();
-      $attributes_pairs = [];
-      foreach($attributes as $key => $value) {
-        $attributes_pairs[] = "{$key}='{$value}'";
-      }
-  
-      $sql = "UPDATE ".static::$table_name." SET ";
-      $sql .= join(', ', $attributes_pairs);
-      $sql .= " WHERE id='" . self::$database->escape_string($this->id) . "'";
-      $sql .= "LIMIT 1";
-      $result = self::$database->query($sql);
-      return $result;
-    }
+    // Save or Update record
     public function save() {
-        if(isset($this->id)) {
+      if ($this->{static::$primary_key}) {
           return $this->update();
-        } else {
-          return $this->create();
-        }
+      }
+      return $this->create();
     }
 
-    static public function delete() {
-
-      $sql = "DELETE FROM ".static::$table_name." ";
-      $sql .= "WHERE product_id IN ('";
-      $sql .= join("', '", array_values($_POST['product']));
-      $sql .= "')";
-      $count = count($_POST['product']);
+    // INSERT record
+    protected function create() {
+      $attributes = $this->attributes();
+      $cols = array_keys($attributes);
+      $placeholders = array_fill(0, count($cols), '?');
+    
+      $sql = "INSERT INTO " . static::$table_name . " ("
+            . implode(', ', $cols)
+            . ") VALUES ("
+            . implode(', ', $placeholders)
+            . ")";
 
       try {
-        $stmt = self::$database->prepare($sql);
-        $stmt->execute();
-        if ($count > 1) {
-          $_SESSION['success'] = $count." products were deleted";
-          
-        } else {
-          $_SESSION['success'] = "One product was deleted";
-        }
+        $stmt = static::$db->prepare($sql);
+        $stmt->execute(array_values($attributes));
+
+        $this->{static::$primary_key} = static::$db->lastInsertId();
         return true;
+
+      } catch (PDOException $e) {
+          throw new \Exception("Create error: " . $e->getMessage());
       }
-      catch (PDOException $e){
-          die("Failed to delete product: " . $e->getMessage());
-      }
-      
     }
 
-    static public function attributes() {
-      $attributes = [];
-      $post_array = $_POST['product'];
+    // UPDATE record
+    protected function update() {
+      $attributes = $this->attributes();
+      $cols = array_keys($attributes);
 
-      foreach($post_array as $key=> $value) {
-          if (array_search($key, static::$db_columns)) {
-              if ($value !== '') {
-                  $attributes[$key] = $value;
-              }
-              else {
-                  $attributes[$key] = '';
-              }
-          }
+      $assignments = implode(', ', array_map(fn($col) => "$col = ?", $cols));
+
+      $sql = "UPDATE " . static::$table_name
+            . " SET $assignments WHERE " . static::$primary_key . " = ? LIMIT 1";
+
+      try {
+          $stmt = static::$db->prepare($sql);
+          return $stmt->execute([
+              ...array_values($attributes),
+              $this->{static::$primary_key}
+          ]);
+
+      } catch (PDOException $e) {
+          throw new \Exception("Update error: " . $e->getMessage());
       }
-      return $attributes;
     }
 
+    // DELETE record
+    public function delete() {
+      $id = $this->{static::$primary_key};
+
+      if (!$id) {
+          throw new \Exception("Cannot delete object without ID.");
+      }
+
+      $sql = "DELETE FROM " . static::$table_name . " WHERE " . static::$primary_key . " = ? LIMIT 1";
+
+      try {
+          $stmt = static::$db->prepare($sql);
+          return $stmt->execute([$id]);
+
+      } catch (PDOException $e) {
+          throw new \Exception("Delete error: " . $e->getMessage());
+      }
+    }
+
+    // GET ATTRIBUTES
+    protected function attributes() {
+      $attrs = [];
+      $columns = method_exists(get_called_class(), 'getColumns') ? get_called_class()::getColumns() : static::$db_columns;
+
+      foreach($columns as $col) {
+          if ($col === static::$primary_key) continue;
+          $attrs[$col] = $this->$col ?? null;
+      }
+      return $attrs;
+
+    }
 
 }

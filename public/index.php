@@ -1,15 +1,24 @@
 <?php 
 session_start();
 require_once __DIR__ . '/../config/bootstrap.php';
-use App\Models\ProductList;
 use App\Models\Product;
 
-$productList = ProductList::find_all();
+$productList = getSortedProductList();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
   if (!empty($_POST['product'])) {
-    $delete = Product::delete();
+    $deletedCount = 0;
+
+    foreach ($_POST['product'] as $product_id) {
+      $product = Product::find_by_id('product_id', $product_id);
+      if ($product) {
+          $product->delete();
+          $deletedCount++;
+      }
+    }
+
+    $_SESSION['success'] = $deletedCount . " product(s) deleted.";
     header("Location: ./");
     exit;
   } else {
@@ -18,7 +27,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     exit;
   }
 }
-
 
 ?>
 

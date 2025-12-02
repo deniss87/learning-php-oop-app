@@ -16,10 +16,12 @@ $args['product_length']='';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
        
-        $data =  new Validation;
+        $data =  new Validation($_POST['product']);
           
         if ($data->validate()) {
-          Product::create();
+          $product = Product::createByCategory($_POST['product']);
+          $product->save();
+
           header("Location: ../");
           exit;
         }

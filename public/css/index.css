@@ -4,10 +4,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min-content, 200px));
   background-color: #ffffff;
-  padding-top: 30px;
-  padding-left: 30px;
-  padding-right: 30px;
-  padding-bottom: 30px;
+  padding: 30px;
   column-gap: 20px;
   row-gap: 20px;
   grid-auto-rows: max-content;
@@ -22,9 +19,8 @@
   border-radius: 5px;
 }
 
-.product-item-hoveover {
-  background-color: rgba(241, 245, 247, 0.863);
-  box-shadow: 2px 2px 2px 2px #c5dde7;
+.product-item:hover {
+  background-color: rgba(216, 226, 231, 0.76);
 }
 
 img {

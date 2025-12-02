@@ -42,12 +42,17 @@ body {
   border: 1px;
   color: rgb(0, 0, 0);
   padding: 10px 25px;
+  margin-left: 10px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 14px;
   border-radius: 12px;
   margin-bottom: 10px;
+}
+
+.button:hover {
+  cursor: pointer;
 }
 
 #formSort {

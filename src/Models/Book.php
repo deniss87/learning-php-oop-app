@@ -2,14 +2,27 @@
 namespace App\Models;
 
 class Book extends Product {
-    public $weight;
+    public $product_weight;
 
-    public function __construct($args=[]) {
-        $this->weight = $args['product_weight'] ?? '';
-        self::$db_columns[] = 'product_weight';
+    protected static $db_columns = [ 
+        'product_id', 
+        'product_sku', 
+        'product_name', 
+        'product_price', 
+        'category_id',
+        'product_weight' 
+    ];
+
+    public function __construct($args=[]) { 
+        parent::__construct($args); 
+        $this->product_weight = $args['product_weight'] ?? null; 
     }
 
-    static public function find_all() {
+    public static function getColumns(): array { 
+        return static::$db_columns; 
+    }
+
+    public static function all($sort = null, $order = null) {
         $sql = "SELECT * FROM ". static::$table_name." WHERE `category_id` = '2'";
         return static::find_by_sql($sql);
     }

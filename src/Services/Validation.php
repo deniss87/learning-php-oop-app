@@ -5,54 +5,54 @@ use App\Models\Category;
 
 class Validation {
 
-    public function __construct(){
-        $this->args = $_POST['product'];
+    private array $args;
+
+    public function __construct(array $args){
+        $this->args = $args;
     }
 
-    public function getData() {
+    public function getData(): array {
         return $this->args;
     }
-    public function validate() {
+    
+    public function validate(): bool {
         $attributes = $this->args;
         $db_columns = Product::getColumns();
 
-        foreach($attributes as $key => $value) {
-            if (array_search($key, $db_columns)) {
-                if ($value == '') {
+        foreach ($attributes as $key => $value) {
+            if (in_array($key, $db_columns, true)) {
+                if ($value === '') {
                     $_SESSION['error'] = "Please fill '".strtoupper($key)."' field";
                     return false;
                 }
-                if ($key = 'category_id' && $value == '0') {
+                if ($key === 'category_id' && $value === '0') {
                     $_SESSION['error'] = "Please choose 'Product category'";
                     return false;
                 }
             }
         }
         
-        $category_name = Category::getCategoryName($attributes['category_id']);
-        $category_obj = new $category_name;
-        $db_columns = $category_name::getColumns();
+        $categoryClass = Category::getCategoryName($attributes['category_id'] ?? 0);
 
-        foreach($attributes as $key => $value) {
-            if (array_search($key, $db_columns)) {
-                if ($value == '') {
+        if ($categoryClass && class_exists($categoryClass)) {
+            $db_columns = $categoryClass::getColumns();
+            foreach ($attributes as $key => $value) {
+                if (in_array($key, $db_columns, true) && $value === '') {
                     $_SESSION['error'] = "Please fill '".strtoupper($key)."' field";
                     return false;
                 }
             }
+        } else {
+            $_SESSION['error'] = "Invalid category selected";
+            return false;
         }
 
         
-        // Check in Database if SKU value alreay exist
-        
-        $sql = "SELECT * FROM Products";
-        $sql .= " WHERE product_sku='".$attributes['product_sku']."'"; 
-        
-        $result = Product::find_by_sql($sql);
-        if ($result !== false) {
+        // Check in Database if SKU value alreay exists
+        if (Product::existsSKU($attributes['product_sku'])) {
             $_SESSION['error'] = "This SKU already exists";
             return false;
-        }        
+        }
 
         return true;
     }
