@@ -1,34 +1,33 @@
-<?php 
+<?php
 session_start();
-require_once(__DIR__ . '/../../config/bootstrap.php'); 
+require_once(__DIR__ . '/../../config/bootstrap.php');
 use App\Services\Validation;
 use App\Models\Category;
 use App\Models\Product;
 
-$args['product_sku']= '';
-$args['product_name']='';
-$args['product_price']='';
-$args['product_size']='';
-$args['product_weight']='';
-$args['product_height']='';
-$args['product_width']='';
-$args['product_length']='';
+$args['product_sku'] = '';
+$args['product_name'] = '';
+$args['product_price'] = '';
+$args['product_size'] = '';
+$args['product_weight'] = '';
+$args['product_height'] = '';
+$args['product_width'] = '';
+$args['product_length'] = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-       
         $data =  new Validation($_POST['product']);
-          
-        if ($data->validate()) {
-          $product = Product::createByCategory($_POST['product']);
-          $product->save();
 
-          header("Location: ../");
-          exit;
-        }
+    if ($data->validate()) {
+        $product = Product::createByCategory($_POST['product']);
+        $product->save();
+
+        header("Location: ../");
+        exit;
+    }
         $args = $_POST['product'];
-} 
+}
 
-$categoryList = Category::find_all();
+$categoryList = Category::findAll();
 
 ?>
 
@@ -85,13 +84,13 @@ $categoryList = Category::find_all();
         <select id="productType" name="product[category_id]" inputname="Product category"
             onChange="showProductSpecs()" required>
         <option name="" value="0">please select</option>
-        <?php 
+        <?php
         foreach ($categoryList as $category) {
-          $args['category_id'] == $category->id 
+            $args['category_id'] == $category->id
                   ? $tag = 'selected'
                   : $tag = '';
-          echo '<option value="'.$category->id.'" '.$tag.'  >'.$category->name.'</option>';
-        } 
+            echo '<option value="' . $category->id . '" ' . $tag . '  >' . $category->name . '</option>';
+        }
         ?>
         </select>
     </div>

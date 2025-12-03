@@ -1,13 +1,15 @@
 <?php
+
 namespace App\Models;
+
 use App\Services\DatabaseObject;
-use \App\Models\Category;
-use \App\Models\DVD;
-use \App\Models\Book;
-use \App\Models\Furniture;
+use App\Models\Category;
+use App\Models\DVD;
+use App\Models\Book;
+use App\Models\Furniture;
 
-class Product extends DatabaseObject {
-
+class Product extends DatabaseObject
+{
     protected static $table_name = 'Products';
     protected static $primary_key = 'product_id';
 
@@ -26,9 +28,9 @@ class Product extends DatabaseObject {
     public $category_id;
     public $category_name;
 
-    public function __construct($args=[]) 
+    public function __construct($args = [])
     {
-      parent::__construct($args);
+        parent::__construct($args);
 
         $this->product_id    = $args['product_id']    ?? null;
         $this->product_sku   = $args['product_sku']   ?? null;
@@ -41,25 +43,28 @@ class Product extends DatabaseObject {
             $this->category_name = $category ?? null;
         }
     }
-  
-    public function getName(): string {
-      return "{$this->product_name} {$this->product_price} {$this->product_sku}";
+
+    public function getName(): string
+    {
+        return "{$this->product_name} {$this->product_price} {$this->product_sku}";
     }
 
-    public static function getColumns(): array {
+    public static function getColumns(): array
+    {
         return self::$db_columns;
     }
 
-    public static function createByCategory(array $data) { 
+    public static function createByCategory(array $data)
+    {
 
         $id = (int) ($data['category_id'] ?? 0);
 
-        return match($id) {
+        return match ($id) {
             1 => new DVD($data),
             2 => new Book($data),
             3 => new Furniture($data),
             default => new Product($data),
-            };
+        };
     }
 
     // GET ALL PRODUCTS
@@ -80,7 +85,7 @@ class Product extends DatabaseObject {
                 LEFT JOIN Category 
                     ON Products.category_id = Category.category_id
                 ORDER BY Products.$sortColumn $sortOrder";
-        
+
         $stmt = static::$db->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -96,5 +101,4 @@ class Product extends DatabaseObject {
 
         return ($row['count'] ?? 0) > 0;
     }
-
 }

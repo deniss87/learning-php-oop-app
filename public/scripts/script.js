@@ -13,7 +13,7 @@ function showProductSpecs() {
       document.getElementById(name).style.display = "none";
       // remove 'required' attribute from selected category fields
       let inputRequiredCount = document.querySelectorAll(
-        `#${name} > input`
+        `#${name} > input`,
       ).length;
       let inputRequired = document.querySelectorAll(`#${name} > input`);
       for (let c = 0; c < inputRequiredCount; c++) {
@@ -24,7 +24,7 @@ function showProductSpecs() {
       document.getElementById(name).style.display = "block";
       // set 'required' attribute to selected category fields
       let inputRequiredCount = document.querySelectorAll(
-        `#${name} > input`
+        `#${name} > input`,
       ).length;
       let inputRequired = document.querySelectorAll(`#${name} > input`);
       for (let c = 0; c < inputRequiredCount; c++) {

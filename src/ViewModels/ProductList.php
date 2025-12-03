@@ -1,7 +1,9 @@
 <?php
+
 namespace App\ViewModels;
 
-class ProductList {
+class ProductList
+{
     public $product_id;
     public $product_sku;
     public $product_name;
@@ -34,7 +36,7 @@ class ProductList {
     }
 
     public function getImage(): string
-    {   
+    {
         return match ($this->category_name) {
             "App\Models\DVD" => "movie.svg",
             "App\Models\Book" => "book.png",
@@ -58,5 +60,4 @@ class ProductList {
             <p>{$specs}</p>    
         ";
     }
-    
 }

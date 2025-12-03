@@ -1,6 +1,7 @@
 <?php
 
-function loadEnv($path = '.env') {
+function loadEnv($path = '.env')
+{
     if (!file_exists($path)) {
         throw new Exception(".env file not found at: " . $path);
     }
@@ -8,7 +9,6 @@ function loadEnv($path = '.env') {
     $lines = file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
     foreach ($lines as $line) {
-
         if (strpos(trim($line), '#') === 0) {
             continue;
         }

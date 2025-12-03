@@ -3,8 +3,6 @@
 │   ├── bootstrap.php
 │   ├── config.php
 │   └── env.php
-├── .env
-├── .gitignore
 ├── public
 │   ├── add-product
 │   │   └── index.php
@@ -17,26 +15,30 @@
 │   │   ├── furniture.svg
 │   │   ├── movie.svg
 │   │   └── no-product-found.png
-│   ├── index.php
-│   └── scripts
-│       └── script.js
-├── README.md
+│   ├── scripts
+│   │   └── script.js
+│   └── index.php
 ├── src
-│   ├── classes
-│   ├── Controllers
 │   ├── Helpers
 │   │   └── functions.php
 │   ├── Models
-│   │   ├── Book.class.php
-│   │   ├── Category.class.php
-│   │   ├── DVD.class.php
-│   │   ├── Furniture.class.php
-│   │   ├── Product.class.php
-│   │   └── ProductList.class.php
-│   └── Services
-│       ├── Database.class.php
-│       ├── DatabaseObject.class.php
-│       └── Validation.class.php
+│   │   ├── Book.php
+│   │   ├── Category.php
+│   │   ├── DVD.php
+│   │   ├── Furniture.php
+│   │   └── Product.php
+│   ├── Services
+│   │   ├── DatabaseObject.php
+│   │   ├── Database.php
+│   │   └── Validation.php
+│   └── ViewModels
+│       └── ProductList.php
+├── composer.json
+├── composer.lock
+├── .env
+├── .gitignore
+├── .phpcs.xml
+├── README.md
 └── structure.txt
 
-13 directories, 27 files
+12 directories, 30 files

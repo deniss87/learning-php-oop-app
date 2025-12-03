@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 require_once __DIR__ . '/../config/bootstrap.php';
 use App\Models\Product;
@@ -6,26 +6,30 @@ use App\Models\Product;
 $productList = getSortedProductList();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (!empty($_POST['product']) && is_array($_POST['product'])) {
+        $ids = array_map('intval', $_POST['product']);
+        $ids = array_values(array_filter($ids, fn($v) => $v > 0));
 
-  if (!empty($_POST['product'])) {
-    $deletedCount = 0;
+        if (empty($ids)) {
+            $_SESSION['error'] = "Please select products";
+            header("Location: ./");
+            exit;
+        }
 
-    foreach ($_POST['product'] as $product_id) {
-      $product = Product::find_by_id('product_id', $product_id);
-      if ($product) {
-          $product->delete();
-          $deletedCount++;
-      }
+        try {
+            $deleted = Product::deleteByIds($ids);
+            $_SESSION['success'] = $deleted . " product(s) deleted.";
+        } catch (Exception $e) {
+            $_SESSION['error'] = "Failed to delete products: " . $e->getMessage();
+        }
+
+        header("Location: ./");
+        exit;
+    } else {
+        $_SESSION['error'] = "Please select products";
+        header("Location: ./");
+        exit;
     }
-
-    $_SESSION['success'] = $deletedCount . " product(s) deleted.";
-    header("Location: ./");
-    exit;
-  } else {
-    $_SESSION['error'] = "Please select products";
-    header("Location: ./");
-    exit;
-  }
 }
 
 ?>
@@ -63,17 +67,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <!-- end -->
 
 <?php
-    if(!$productList) {
-      echo '<div id="no-product">';
-      echo '<img id="no-product-img" src="./images/no-product-found.png">';
-      echo '<p>NO PRODUCT</p><p>FOUND</p>';
-      echo '</div>';
-      echo '<div class="push"></div> </div>';
-      echo '<footer class="footer">';
-      echo '<div class="footer-text">Simple CRUD App (PHP OOP)</div>';
-      echo '</footer>';      
-      exit;
-    } 
+if (!$productList) {
+    echo '<div id="no-product">';
+    echo '<img id="no-product-img" src="./images/no-product-found.png">';
+    echo '<p>NO PRODUCT</p><p>FOUND</p>';
+    echo '</div>';
+    echo '<div class="push"></div> </div>';
+    echo '<footer class="footer">';
+    echo '<div class="footer-text">Simple CRUD App (PHP OOP)</div>';
+    echo '</footer>';
+    exit;
+}
 ?>
 <div class="header-sort">
     <form method="get" id="formSort"> 
@@ -90,10 +94,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <form method="post" id="formPost">
 <div class="product-container">
 <?php
-        foreach ($productList as $product) {
-        echo '<div class="product-item">'.$product->preview().'</div>';
-        }
-  ?>
+foreach ($productList as $product) {
+    echo '<div class="product-item">' . $product->preview() . '</div>';
+}
+?>
 </div>
 </form>
 <!-- end -->
