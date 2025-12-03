@@ -50,7 +50,7 @@ class ProductList {
 
         return "
             <input type='checkbox' id='{$this->product_id}' class='delete-checkbox'
-            name='product[{$this->product_name}]' value='{$this->product_id}'>
+            name='product[]' value='{$this->product_id}'>
             <img src='./images/{$image}'>
             <p>SKU: {$this->product_sku}</p>
             <p><b>{$this->product_name}</b></p>
