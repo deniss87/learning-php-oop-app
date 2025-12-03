@@ -1,8 +1,6 @@
 .
 ├── config
-│   ├── bootstrap.php
-│   ├── config.php
-│   └── env.php
+│   └── bootstrap.php
 ├── public
 │   ├── add-product
 │   │   └── index.php
@@ -41,4 +39,4 @@
 ├── README.md
 └── structure.txt
 
-12 directories, 30 files
+12 directories, 28 files
