@@ -1,9 +1,6 @@
 <?php
 
 use App\Models\Product;
-use App\Models\DVD;
-use App\Models\Book;
-use App\Models\Furniture;
 use App\ViewModels\ProductList;
 
 function flashMessages()
@@ -53,7 +50,7 @@ function getSortedProductList(): array
             break;
     }
 
-    $productListData = Product::all($sort, $order);
+    $productListData = Product::getAll($sort, $order);
 
     $typedProducts = array_map(
         fn($row) => Product::createByCategory($row),

@@ -43,8 +43,8 @@ abstract class DatabaseObject
         }
     }
 
-    // Find ALL records
-    public static function findAll()
+    // GET ALL RECORDS
+    public static function getAll()
     {
         $sql = "SELECT * FROM " . static::$table_name;
         return static::findBySQL($sql);
@@ -53,7 +53,7 @@ abstract class DatabaseObject
 
     // Find by SQL statement
 
-    protected static function findBySQL(string $sql, array $params = [])
+    protected static function findBySQL(string $sql, array $params = [], bool $asObjects = false)
     {
         try {
             $stmt = static::$db->prepare($sql);
@@ -64,8 +64,12 @@ abstract class DatabaseObject
                 return [];
             }
 
-            $class = get_called_class();
-            return array_map(fn($row) => new $class($row), $rows);
+            if ($asObjects) {
+                $class = get_called_class();
+                return array_map(fn($row) => new $class($row), $rows);
+            }
+
+            return $rows;
         } catch (PDOException $e) {
             throw new \Exception("Database query error: " . $e->getMessage());
         }

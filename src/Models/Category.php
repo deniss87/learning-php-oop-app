@@ -18,9 +18,15 @@ class Category extends DatabaseObject
         $this->name = $args['category_name'] ?? '';
     }
 
-    public function name()
+    public function getName()
     {
         return $this->name;
+    }
+
+    public static function getAll()
+    {
+        $sql = "SELECT * FROM " . static::$table_name;
+        return static::findBySQL($sql, [], true);
     }
 
     public static function getCategoryName($id_value)

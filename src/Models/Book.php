@@ -26,7 +26,7 @@ class Book extends Product
         return static::$db_columns;
     }
 
-    public static function findAll($sort = null, $order = null)
+    public static function getAll($sort = null, $order = null)
     {
         $sql = "SELECT * FROM " . static::$table_name . " WHERE `category_id` = '2'";
         return static::findBySQL($sql);

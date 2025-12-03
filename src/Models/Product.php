@@ -68,7 +68,7 @@ class Product extends DatabaseObject
     }
 
     // GET ALL PRODUCTS
-    public static function all($sort = null, $order = null)
+    public static function getAll($sort = null, $order = null)
     {
         $allowedSort = [
             'product_id',
@@ -86,19 +86,15 @@ class Product extends DatabaseObject
                     ON Products.category_id = Category.category_id
                 ORDER BY Products.$sortColumn $sortOrder";
 
-        $stmt = static::$db->prepare($sql);
-        $stmt->execute();
-        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
-        // return static::find_by_sql($sql);
+        return static::findBySQL($sql);
     }
 
     public static function existsSKU(string $sku): bool
     {
         $sql = "SELECT COUNT(*) as count FROM " . static::$table_name . " WHERE product_sku = ?";
-        $stmt = static::$db->prepare($sql);
-        $stmt->execute([$sku]);
-        $row = $stmt->fetch(\PDO::FETCH_ASSOC);
+        $row = static::findBySQL($sql, [$sku]);
+        $count = $rows[0]['count'] ?? 0;
 
-        return ($row['count'] ?? 0) > 0;
+        return $count > 0;
     }
 }
