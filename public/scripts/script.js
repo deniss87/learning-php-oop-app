@@ -6,8 +6,8 @@ function showProductSpecs() {
   ].innerText;
 
   for (let i = 1; i < listLength; i++) {
-    name = document.querySelectorAll("#productType > option")[i].innerText;
-    id = document.querySelectorAll("#productType > option")[i].value;
+    let name = document.querySelectorAll("#productType > option")[i].innerText;
+    let id = document.querySelectorAll("#productType > option")[i].value;
 
     if (name !== selectedName) {
       document.getElementById(name).style.display = "none";
@@ -65,23 +65,44 @@ function formSortSelect() {
     const sortList = document.querySelectorAll("#selectSort > option");
 
     for (let i = 0; i < sortList.length; i++) {
-      sortListId = sortList[i].value;
+      let sortListId = sortList[i].value;
 
       if (sortListId == UrlSortValue) {
         sortList[i].setAttribute("selected", "");
       }
     }
   }
-  // function end
 }
 
-// document.getElementById("product-item").addEventListener("mouseover", mouseOver);
-// document.getElementById("product-item").addEventListener("mouseout", mouseOut);
+// document.addEventListener("DOMContentLoaded", () => {
+//   const productCards = document.querySelectorAll(".product-item");
 
-// function mouseOver() {
-//   document.getElementById("demo").style.color = "red";
-// }
+//   productCards.forEach((card) => {
+//     card.addEventListener("click", (e) => {
+//       if (e.target.tagName === "A") return;
 
-// function mouseOut() {
-//   document.getElementById("demo").style.color = "black";
-// }
+//       const checkbox = card.querySelector(".delete-checkbox");
+//       if (checkbox) {
+//         checkbox.checked = !checkbox.checked;
+//       }
+//     });
+//   });
+// });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const items = document.querySelectorAll(".product-item");
+
+  items.forEach((item) => {
+    item.addEventListener("click", () => {
+      const checkbox = item.querySelector(".delete-checkbox");
+
+      checkbox.checked = !checkbox.checked;
+
+      if (checkbox.checked) {
+        item.classList.add("active");
+      } else {
+        item.classList.remove("active");
+      }
+    });
+  });
+});

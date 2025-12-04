@@ -1,0 +1,127 @@
+/*** PRODUCT GRID ***/
+.product-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 220px));
+  background-color: #fff;
+  padding: 30px;
+  gap: 1.5rem;
+  max-width: 1276px;
+  margin: 0 auto;
+}
+
+.product-item {
+  position: relative;
+  background-color: var(--bg-light);
+  border: 1px solid #000;
+  padding: 10px 20px;
+  font-size: 16px;
+  text-align: center;
+  border-radius: var(--border-radius);
+  transition: background-color 0.2s ease;
+}
+
+.product-item:hover {
+  cursor: pointer;
+  background-color: var(--bg-light-hover);
+}
+
+.product-item.active {
+  background-color: var(--accent-color-light, #d7e9ff);
+  border-color: var(--accent-color, #4a90e2);
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
+}
+
+.product-item::after {
+  content: "Select item";
+  position: absolute;
+  top: 8px;
+  right: 60px;
+  padding: 3px 8px;
+  font-size: 12px;
+  background: rgba(0, 0, 0, 0.75);
+  color: white;
+  border-radius: 4px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease-in-out;
+  white-space: nowrap;
+}
+
+.product-item:hover::after {
+  opacity: 1;
+}
+/*** EMPTY PRODUCT VIEW ***/
+#no-product {
+  text-align: center;
+  margin: auto;
+}
+
+#no-product p {
+  margin: 0;
+  font-size: 35px;
+}
+
+/*** SORT DROPDOWN ***/
+#selectSort {
+  border-radius: var(--border-radius);
+  padding: 5px;
+}
+
+/*** CHECKBOX ***/
+
+.checkbox-wrapper {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+}
+
+.delete-checkbox {
+  opacity: 0;
+  position: absolute;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.checkbox-custom {
+  width: 36px;
+  height: 36px;
+  border-radius: 4px;
+  border: 2px solid var(--gray-light);
+  background-color: transparent;
+  display: inline-block;
+  transition: all 0.2s ease;
+  opacity: 0;
+}
+
+.product-item:hover .checkbox-custom {
+  opacity: 1;
+}
+
+.delete-checkbox:checked + .checkbox-custom {
+  opacity: 1;
+  border-color: var(--accent-color);
+  background-color: var(--accent-color);
+}
+
+.delete-checkbox:checked + .checkbox-custom::after {
+  content: "✓";
+  color: rgb(48, 173, 43);
+  font-size: 38px;
+  position: relative;
+  top: -8px;
+  left: 3px;
+}
+
+/*** MOBILE ***/
+@media only screen and (max-width: 450px) {
+  .product-container {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    padding: 30px 15px;
+    gap: 10px;
+  }
+
+  .product-item {
+    font-size: 14px;
+  }
+}

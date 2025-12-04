@@ -42,73 +42,79 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <title>Simple CRUD App (PHP OOP)</title>
   <link rel="stylesheet" href="./css/globals.css">
   <link rel="stylesheet" href="./css/main.css">
-  <link rel="stylesheet" href="./css/index.css">
+  <link rel="stylesheet" href="./css/product-list.css">
   <script src="./scripts/script.js"></script>
 </head>
 
 <body>
-<div class="main-content">
-<!-- Header -->
-<div class="header">
-  <div class="header-main header-left"><h1>Product List</h1></div>
-  <div class="header-main header-right">
-    <a href='add-product'><button class="button" id="add-product-btn" name="ADD">ADD</button></a>
-    <input type="submit" class="button" id="delete-product-btn" value="DELETE" name="DELETE" onclick="formSubmit('formPost')"/>
-  </div>
-</div>
-
-<!-- Message box -->
- <div class="message">
-  <?php flashMessages(); ?> 
- </div>
-<!-- end -->
-
-<!-- NO PRODUCTS VIEW -->
-<?php
-if (!$productList) {
-    echo '<div id="no-product">';
-    echo '<img id="no-product-img" src="./images/no-product-found.png">';
-    echo '<p>NO PRODUCT</p><p>FOUND</p>';
-    echo '</div>';
-    echo '<div class="push"></div> </div>';
-    echo '<footer class="footer">';
-    echo '<div class="footer-text">Simple CRUD App (PHP OOP)</div>';
-    echo '</footer>';
-    exit;
-}
-?>
-<!-- SORT DROPDOWN -->
-<div class="header-sort">
-    <form method="get" id="formSort"> 
-        <!-- <label for="selectSort">Sort by:</label> -->
-        <select id="selectSort" name="sort" onchange="formSubmit('formSort')">
-            <option name="sort_new" value="new">New products first</option>
-            <option name="sort_old" value="old">Old products first</option>
-            <option name="sort_priceUp" value="price_up">Price (cheaper first)</option>
-            <option name="sort_priceDown" value="price_down">Price (expensive first)</option>
-        </select>
-      </form>
-  </div>  
-<!-- PRODUCT LIST -->
-<form method="post" id="formPost">
-<div class="product-container">
-<?php
-foreach ($productList as $product) {
-    echo '<div class="product-item">' . $product->preview() . '</div>';
-}
-?>
-</div>
-</form>
-</div>
-
-<!-- Footer -->
-<footer class="footer">
-    <div class="footer-text">Simple CRUD App (PHP OOP)</div>
-</footer>
   
-<script>
-  formSortSelect();
-</script>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="header-main header-left"><h1>Product List</h1></div>
+      <div class="header-main header-right">
+        <a href='add-product'><button class="button" id="add-product-btn" name="ADD">ADD</button></a>
+        <input type="submit" class="button" id="delete-product-btn" value="DELETE" name="DELETE" onclick="formSubmit('formPost')"/>
+      </div>
+    </div>
+  </header>
 
+  <!-- Main -->
+  <div class="main-container">
+  <main class="main-content">
+
+    <!-- Message box -->
+    <div class="message">
+      <?php flashMessages(); ?> 
+    </div>
+
+
+    <!-- NO PRODUCTS VIEW -->
+    <?php
+    if (!$productList) {
+        // echo '<div id="no-product">';
+        // echo '<img id="no-product-img" src="./images/no-product-found.png">';
+        // echo '<p>NO PRODUCT</p><p>FOUND</p>';
+        // echo '</div>';
+        // echo '</div>';
+        include __DIR__ . '/shared/no-product.php';
+        exit;
+    }
+    ?>
+
+    <!-- SORT DROPDOWN -->
+    <div class="header-sort">
+        <form method="get" id="formSort"> 
+            <!-- <label for="selectSort">Sort by:</label> -->
+            <select id="selectSort" name="sort" onchange="formSubmit('formSort')">
+                <option name="sort_new" value="new">New products first</option>
+                <option name="sort_old" value="old">Old products first</option>
+                <option name="sort_priceUp" value="price_up">Price (cheaper first)</option>
+                <option name="sort_priceDown" value="price_down">Price (expensive first)</option>
+            </select>
+          </form>
+      </div>  
+  
+    <!-- PRODUCT LIST -->
+    <form method="post" id="formPost">
+      <div class="product-container">
+      <?php
+        foreach ($productList as $product) {
+            echo '<div class="product-item">' . $product->preview() . '</div>';
+        }
+        ?>
+      </div>
+    </form>
+
+    </main>
+    </div>
+
+    <!-- Footer -->
+    <?php include __DIR__ . '/shared/footer.php'; ?>
+
+    <script>
+      formSortSelect();
+    </script>
+  
 </body>
 </html>

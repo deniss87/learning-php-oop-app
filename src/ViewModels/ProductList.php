@@ -51,8 +51,11 @@ class ProductList
         $specs = $this->getSpecs();
 
         return "
-            <input type='checkbox' id='{$this->product_id}' class='delete-checkbox'
-            name='product[]' value='{$this->product_id}'>
+            <label class='checkbox-wrapper'>
+              <input type='checkbox' id='{$this->product_id}' class='delete-checkbox'
+              name='product[]' value='{$this->product_id}'>
+              <span class='checkbox-custom'></span>
+            </label>
             <img src='./images/{$image}'>
             <p>SKU: {$this->product_sku}</p>
             <p><b>{$this->product_name}</b></p>
