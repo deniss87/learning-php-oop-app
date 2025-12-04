@@ -1,53 +1,51 @@
-/*** HEADER ***/
-html,
-body {
-  height: 95.8%;
-  margin: 0;
-}
+/*** LAYOUT ***/
 .wrapper {
   min-height: 100%;
-  margin-bottom: -50px;
+  margin-bottom: calc(var(--header-height) * -1);
 }
+
 .header {
   position: fixed;
   display: grid;
   grid-template-columns: auto auto;
   top: 0;
-  right: 0;
   left: 0;
+  right: 0;
   width: 100%;
-  color: #ffffff;
+  color: var(--text-light);
+  background-color: var(--color-primary);
   z-index: 10;
 }
+
 .header-main {
   font-size: 12px;
-  background-color: rgb(84, 102, 127);
 }
+
 .header-left {
   text-align: left;
   padding-left: 40px;
 }
+
 .header-right {
   text-align: right;
   padding-top: 15px;
   padding-right: 13%;
 }
+
 .header-sort {
   text-align: right;
   padding-right: 8%;
 }
 
+/*** BUTTONS ***/
 .button {
-  background-color: rgb(206, 206, 206);
-  border: 1px;
-  color: rgb(0, 0, 0);
+  background-color: var(--color-secondary);
+  border: 1px solid transparent;
+  color: var(--text-color);
   padding: 10px 25px;
   margin-left: 10px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
   font-size: 14px;
-  border-radius: 12px;
+  border-radius: var(--border-radius);
   margin-bottom: 10px;
 }
 
@@ -55,40 +53,31 @@ body {
   cursor: pointer;
 }
 
-#formSort {
-  font-size: medium;
-}
-
 /*** MESSAGE BOX ***/
 .message {
   display: block;
   width: 350px;
-  margin-top: 80px;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 80px auto 0 auto;
   font-size: 18px;
   text-align: center;
 }
 
 .message-success p {
-  background-color: rgb(146, 199, 146);
+  background-color: var(--bg-success);
   padding: 10px;
-  border-radius: 10px;
+  border-radius: var(--border-radius);
 }
+
 .message-error p {
-  background-color: rgba(255, 0, 0, 0.15);
+  background-color: var(--bg-error);
   padding: 10px;
-  border-radius: 10px;
+  border-radius: var(--border-radius);
 }
 
 /*** FOOTER ***/
-.footer,
-.push {
-  height: 50px;
-}
 
 .footer {
-  background-color: rgb(84, 102, 127);
+  background-color: var(--color-primary);
 }
 
 .footer-text {
@@ -96,33 +85,14 @@ body {
   text-align: center;
   padding-top: 15px;
 }
-/*** ***/
-.hidden {
-  display: none;
-}
+
+/*** MOBILE ***/
 @media only screen and (max-width: 450px) {
   .header {
-    position: fixed;
-    display: grid;
     grid-template-columns: auto;
-    top: 0;
-    right: 0;
-    left: 0;
-    width: 100%;
-    color: #ffffff;
-    z-index: 10;
   }
 
   .header-left {
     display: none;
-  }
-  .header-right {
-    text-align: right;
-    padding-top: 15px;
-    background-color: rgb(84, 102, 127);
-  }
-
-  #formSort {
-    text-align: center;
   }
 }

@@ -1,49 +1,48 @@
+/*** PAGE BACKGROUND ***/
 body {
   background-color: #f2f2f2;
 }
-.header-left {
-  text-align: right;
-}
 
+/*** FORM FIELDS ***/
 input[type="text"],
 input[type="number"],
 select {
   width: 100%;
-  padding: 10px 10px;
+  padding: 10px;
   margin: 8px 0;
   border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
+  border-radius: var(--border-radius);
   text-align: center;
+  box-sizing: border-box;
 }
 
-input[type="text"]:focus,
-input[type="number"]:focus,
+input:focus,
 select:focus {
-  outline: none !important;
+  outline: none;
   border: 2px solid red;
 }
 
+/*** FORM WRAPPER ***/
 .form-container {
   display: grid;
-  grid-template-columns: auto;
+  grid-template-columns: 1fr;
   row-gap: 5px;
   width: 350px;
-  margin-top: 20px;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 20px auto;
 }
 
+/*** DYNAMIC FIELD DESCRIPTION ***/
 .product-type-desc {
-  background-color: rgba(255, 0, 0, 0.15);
+  background-color: var(--bg-error);
+  color: var(--text-color);
   font-style: italic;
-  color: rgb(0, 0, 0);
-  font-size: medium;
   text-align: center;
+  font-size: medium;
   padding: 10px;
-  border-radius: 10px;
+  border-radius: var(--border-radius);
 }
 
+/*** HIDDEN TYPE BLOCKS ***/
 #DVD,
 #Book,
 #Furniture {
@@ -51,19 +50,8 @@ select:focus {
   padding-bottom: 50px;
 }
 
+/*** MOBILE ***/
 @media only screen and (max-width: 450px) {
-  input[type="text"],
-  input[type="number"],
-  select {
-    width: 100%;
-    padding: 10px 10px;
-    margin: 8px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    text-align: center;
-  }
-
   .form-container {
     width: 250px;
   }

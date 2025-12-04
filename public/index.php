@@ -36,19 +36,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <!DOCTYPE html>
 <html lang="en">
-<!-- HTML HEAD -->
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Simple CRUD App (PHP OOP)</title>
+  <link rel="stylesheet" href="./css/globals.css">
   <link rel="stylesheet" href="./css/main.css">
   <link rel="stylesheet" href="./css/index.css">
   <script src="./scripts/script.js"></script>
 </head>
-<!-- end -->
 
-<!-- HTML BODY -->
 <body>
+<div class="main-content">
 <!-- Header -->
 <div class="header">
   <div class="header-main header-left"><h1>Product List</h1></div>
@@ -57,15 +56,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <input type="submit" class="button" id="delete-product-btn" value="DELETE" name="DELETE" onclick="formSubmit('formPost')"/>
   </div>
 </div>
-<!-- end -->
 
-<div class="wrapper">
 <!-- Message box -->
  <div class="message">
   <?php flashMessages(); ?> 
  </div>
 <!-- end -->
 
+<!-- NO PRODUCTS VIEW -->
 <?php
 if (!$productList) {
     echo '<div id="no-product">';
@@ -79,6 +77,7 @@ if (!$productList) {
     exit;
 }
 ?>
+<!-- SORT DROPDOWN -->
 <div class="header-sort">
     <form method="get" id="formSort"> 
         <!-- <label for="selectSort">Sort by:</label> -->
@@ -90,7 +89,7 @@ if (!$productList) {
         </select>
       </form>
   </div>  
-<!-- Main Content -->
+<!-- PRODUCT LIST -->
 <form method="post" id="formPost">
 <div class="product-container">
 <?php
@@ -100,18 +99,16 @@ foreach ($productList as $product) {
 ?>
 </div>
 </form>
-<!-- end -->
+</div>
 
 <!-- Footer -->
-<div class="push"></div>
-</div>
 <footer class="footer">
     <div class="footer-text">Simple CRUD App (PHP OOP)</div>
 </footer>
+  
 <script>
   formSortSelect();
 </script>
-<!-- end -->
+
 </body>
-<!-- HTML END -->
 </html>

@@ -1,83 +1,61 @@
-/*** MAIN CONTENT***/
-
+/*** PRODUCT GRID ***/
 .product-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min-content, 200px));
-  background-color: #ffffff;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 220px));
+  background-color: #fff;
   padding: 30px;
-  column-gap: 20px;
-  row-gap: 20px;
-  grid-auto-rows: max-content;
+  gap: 1.5rem;
 }
 
 .product-item {
-  background-color: rgba(241, 245, 247, 0.863);
-  border: 1px solid black;
-  padding: 5px;
+  background-color: var(--bg-light);
+  border: 1px solid #000;
+  padding: 10px 20px;
   font-size: 16px;
   text-align: center;
-  border-radius: 5px;
+  border-radius: var(--border-radius);
+  transition: background-color 0.2s ease;
 }
 
 .product-item:hover {
-  background-color: rgba(216, 226, 231, 0.76);
+  background-color: var(--bg-light-hover);
 }
 
-img {
-  width: 90%;
-}
+/*** EMPTY PRODUCT VIEW ***/
 #no-product {
-  display: block;
+  text-align: center;
   margin: auto;
   padding-top: 10%;
-  text-align: center;
 }
-#no-product img {
-  width: auto;
-}
+
 #no-product p {
-  padding: 0;
   margin: 0;
   font-size: 35px;
 }
 
+/*** SORT DROPDOWN ***/
 #selectSort {
-  border-radius: 8px;
-  padding: 5px 0px 5px 5px;
+  border-radius: var(--border-radius);
+  padding: 5px;
 }
+
+/*** CHECKBOX ***/
 .delete-checkbox {
-  position: relative;
   height: 20px;
   width: 20px;
+  position: relative;
   left: 40%;
 }
 
-label {
-  padding-right: 5px;
-}
-
+/*** MOBILE ***/
 @media only screen and (max-width: 450px) {
   .product-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min-content, 160px));
-    padding-top: 30px;
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-bottom: 30px;
-    column-gap: 10px;
-    row-gap: 10px;
-    grid-auto-rows: max-content;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    padding: 30px 15px;
+    gap: 10px;
   }
 
   .product-item {
-    background-color: rgba(241, 245, 247, 0.863);
-    border: 1px solid black;
-    padding: 5px;
     font-size: 14px;
-    text-align: center;
-  }
-
-  img {
-    width: 80%;
   }
 }
