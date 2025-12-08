@@ -54,6 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       <div class="header-main header-left"><h1>Product List</h1></div>
       <div class="header-main header-right">
         <a href='add-product'><button class="button" id="add-product-btn" name="ADD">ADD</button></a>
+        <a href="#" id="edit-product-link"><button class="button" id="edit-product-btn" >EDIT</button></a>
         <input type="submit" class="button" id="delete-product-btn" value="DELETE" name="DELETE" onclick="formSubmit('formPost')"/>
       </div>
     </div>
@@ -72,11 +73,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <!-- NO PRODUCTS VIEW -->
     <?php
     if (!$productList) {
-        // echo '<div id="no-product">';
-        // echo '<img id="no-product-img" src="./images/no-product-found.png">';
-        // echo '<p>NO PRODUCT</p><p>FOUND</p>';
-        // echo '</div>';
-        // echo '</div>';
         include __DIR__ . '/shared/no-product.php';
         exit;
     }

@@ -37,6 +37,7 @@ function showProductSpecs() {
 function formSubmit(formId) {
   return document.getElementById(formId).submit();
 }
+
 function formVerify() {
   let messageBox = document.querySelector(".message-text");
   messageBox.innerHTML = "";
@@ -73,21 +74,6 @@ function formSortSelect() {
     }
   }
 }
-
-// document.addEventListener("DOMContentLoaded", () => {
-//   const productCards = document.querySelectorAll(".product-item");
-
-//   productCards.forEach((card) => {
-//     card.addEventListener("click", (e) => {
-//       if (e.target.tagName === "A") return;
-
-//       const checkbox = card.querySelector(".delete-checkbox");
-//       if (checkbox) {
-//         checkbox.checked = !checkbox.checked;
-//       }
-//     });
-//   });
-// });
 
 document.addEventListener("DOMContentLoaded", () => {
   const items = document.querySelectorAll(".product-item");

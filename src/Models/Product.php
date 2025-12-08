@@ -93,8 +93,7 @@ class Product extends DatabaseObject
     {
         $sql = "SELECT COUNT(*) as count FROM " . static::$table_name . " WHERE product_sku = ?";
         $row = static::findBySQL($sql, [$sku]);
-        $count = $rows[0]['count'] ?? 0;
-
+        $count = $row[0]['count'] ?? 0;
         return $count > 0;
     }
 }

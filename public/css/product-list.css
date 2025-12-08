@@ -1,3 +1,9 @@
+/* EDIT and DELETE BUTTONS */
+#delete-product-btn,
+#edit-product-link {
+  /* display: none; */
+}
+
 /*** PRODUCT GRID ***/
 .product-container {
   display: grid;
@@ -35,7 +41,7 @@
   content: "Select item";
   position: absolute;
   top: 8px;
-  right: 60px;
+  right: 72px;
   padding: 3px 8px;
   font-size: 12px;
   background: rgba(0, 0, 0, 0.75);
