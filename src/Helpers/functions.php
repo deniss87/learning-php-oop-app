@@ -50,12 +50,7 @@ function getSortedProductList(): array
             break;
     }
 
-    $productListData = Product::getAll($sort, $order);
-
-    $typedProducts = array_map(
-        fn($row) => Product::createByCategory($row),
-        $productListData
-    );
+    $productData = Product::getAll($sort, $order);
 
     $productObjects = array_map(
         fn($p) => new ProductList([
@@ -71,7 +66,7 @@ function getSortedProductList(): array
             'product_width'  => $p->product_width ?? null,
             'product_length' => $p->product_length ?? null,
         ]),
-        $typedProducts
+        $productData
     );
 
     return $productObjects;

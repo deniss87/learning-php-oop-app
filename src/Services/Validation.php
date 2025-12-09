@@ -4,14 +4,17 @@ namespace App\Services;
 
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\DVD;
 
 class Validation
 {
     private array $args;
+    private ?int $productId;
 
-    public function __construct(array $args)
+    public function __construct(array $args, ?int $productId = null)
     {
         $this->args = $args;
+        $this->productId = $productId ?? null;
     }
 
     public function getData(): array
@@ -37,24 +40,8 @@ class Validation
             }
         }
 
-        $categoryClass = Category::getCategoryName($attributes['category_id'] ?? 0);
-
-        if ($categoryClass && class_exists($categoryClass)) {
-            $db_columns = $categoryClass::getColumns();
-            foreach ($attributes as $key => $value) {
-                if (in_array($key, $db_columns, true) && $value === '') {
-                    $_SESSION['error'] = "Please fill '" . strtoupper($key) . "' field";
-                    return false;
-                }
-            }
-        } else {
-            $_SESSION['error'] = "Invalid category selected";
-            return false;
-        }
-
-
         // Check in Database if SKU value alreay exists
-        if (Product::existsSKU($attributes['product_sku'])) {
+        if (Product::existsSKU($this->args['product_sku'], $this->productId)) {
             $_SESSION['error'] = "This SKU already exists";
             return false;
         }

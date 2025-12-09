@@ -14,6 +14,7 @@ class Furniture extends Product
         'product_name',
         'product_price',
         'category_id',
+        'category_name',
         'product_height',
         'product_width',
         'product_length'

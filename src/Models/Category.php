@@ -26,23 +26,22 @@ class Category extends DatabaseObject
     public static function getAll()
     {
         $sql = "SELECT * FROM " . static::$table_name;
-        return static::findBySQL($sql, [], true);
+        return static::findBySQL($sql, [], false);
     }
 
     public static function getCategoryName($id_value)
     {
-        $category_obj = self::findById('category_id', number_format($id_value));
-        if (!$category_obj) {
-            return false;
+        $sql = "SELECT category_name 
+            FROM " . static::$table_name . " 
+            WHERE category_id = :id 
+            LIMIT 1";
+
+        $data =  static::findBySQL($sql, ['id' => $id_value]);
+
+        if (empty($data)) {
+            return null;
         }
 
-        $name = $category_obj->name;
-        $map = [
-            'DVD' => \App\Models\DVD::class,
-            'Book' => \App\Models\Book::class,
-            'Furniture' => \App\Models\Furniture::class,
-        ];
-
-        return $map[$name] ?? false;
+        return $data[0]['category_name'];
     }
 }

@@ -67,9 +67,14 @@
   border-radius: var(--border-radius);
 }
 
-.button:hover {
+.button:not(:disabled):hover {
   cursor: pointer;
   background-color: var(--bg-light-hover);
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 /*** MESSAGE BOX ***/

@@ -12,6 +12,7 @@ class Book extends Product
         'product_name',
         'product_price',
         'category_id',
+        'category_name',
         'product_weight'
     ];
 

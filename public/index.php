@@ -5,32 +5,32 @@ use App\Models\Product;
 
 $productList = getSortedProductList();
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (!empty($_POST['product']) && is_array($_POST['product'])) {
-        $ids = array_map('intval', $_POST['product']);
-        $ids = array_values(array_filter($ids, fn($v) => $v > 0));
+// if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+//     if (!empty($_POST['product']) && is_array($_POST['product'])) {
+//         $ids = array_map('intval', $_POST['product']);
+//         $ids = array_values(array_filter($ids, fn($v) => $v > 0));
 
-        if (empty($ids)) {
-            $_SESSION['error'] = "Please select products";
-            header("Location: ./");
-            exit;
-        }
+//         if (empty($ids)) {
+//             $_SESSION['error'] = "Please select products";
+//             header("Location: ./");
+//             exit;
+//         }
 
-        try {
-            $deleted = Product::deleteByIds($ids);
-            $_SESSION['success'] = $deleted . " product(s) deleted.";
-        } catch (Exception $e) {
-            $_SESSION['error'] = "Failed to delete products: " . $e->getMessage();
-        }
+//         try {
+//             $deleted = Product::deleteByIds($ids);
+//             $_SESSION['success'] = $deleted . " product(s) deleted.";
+//         } catch (Exception $e) {
+//             $_SESSION['error'] = "Failed to delete products: " . $e->getMessage();
+//         }
 
-        header("Location: ./");
-        exit;
-    } else {
-        $_SESSION['error'] = "Please select products";
-        header("Location: ./");
-        exit;
-    }
-}
+//         header("Location: ./");
+//         exit;
+//     } else {
+//         $_SESSION['error'] = "Please select products";
+//         header("Location: ./");
+//         exit;
+//     }
+// }
 
 ?>
 
@@ -53,9 +53,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="header-inner">
       <div class="header-main header-left"><h1>Product List</h1></div>
       <div class="header-main header-right">
-        <a href='add-product'><button class="button" id="add-product-btn" name="ADD">ADD</button></a>
-        <a href="#" id="edit-product-link"><button class="button" id="edit-product-btn" >EDIT</button></a>
-        <input type="submit" class="button" id="delete-product-btn" value="DELETE" name="DELETE" onclick="formSubmit('formPost')"/>
+        <a href="add-product"><button class="button" id="add-product-btn" name="ADD">ADD</button></a>
+        <button class="button" id="edit-product-btn" disabled onclick="submitAction('formEdit')">EDIT</button>
+        <button class="button" id="delete-product-btn" disabled onclick="submitAction('formDelete')">DELETE</button>
       </div>
     </div>
   </header>
@@ -81,7 +81,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <!-- SORT DROPDOWN -->
     <div class="header-sort">
         <form method="get" id="formSort"> 
-            <!-- <label for="selectSort">Sort by:</label> -->
             <select id="selectSort" name="sort" onchange="formSubmit('formSort')">
                 <option name="sort_new" value="new">New products first</option>
                 <option name="sort_old" value="old">Old products first</option>
@@ -100,6 +99,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         ?>
       </div>
+    </form>
+    
+    <!-- HIDDEN ACTION FORMS -->
+    <form method="post" action="./actions/edit.php" id="formEdit">
+      <input type="hidden" name="action" value="edit">
+    </form>
+
+    <form method="post" action="./actions/delete.php" id="formDelete">
+      <input type="hidden" name="action" value="delete">
     </form>
 
     </main>

@@ -90,15 +90,15 @@ $categoryList = Category::getAll();
           <label for="productType">Product category:</label>
           <select id="productType" name="product[category_id]" inputname="Product category"
               onChange="showProductSpecs()" required>
-          <option name="" value="0">please select</option>
+          <option name="" value="">please select</option>
           <?php
             foreach ($categoryList as $category) {
-                $args['category_id'] == $category->id
+                $args['category_id'] === $category['category_id']
                       ? $tag = 'selected'
                       : $tag = '';
-                echo '<option value="' . $category->id . '" ' . $tag . '  >' . $category->name . '</option>';
+                echo '<option value="' . $category['category_id'] . '" ' . $tag . '  >' . $category['category_name'] . '</option>';
             }
-          ?>
+            ?>
           </select>
       </div>
 

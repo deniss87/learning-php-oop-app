@@ -27,9 +27,9 @@ class ProductList
     public function getSpecs(): string
     {
         return match ($this->category_name) {
-            "App\Models\DVD" => "Size: {$this->product_size} MB",
-            "App\Models\Book" => "Weight: {$this->product_weight} kg",
-            "App\Models\Furniture" =>
+            "DVD" => "Size: {$this->product_size} MB",
+            "Book" => "Weight: {$this->product_weight} kg",
+            "Furniture" =>
                 "Dimension: {$this->product_height}x{$this->product_width}x{$this->product_length}",
             default => "",
         };
@@ -38,9 +38,9 @@ class ProductList
     public function getImage(): string
     {
         return match ($this->category_name) {
-            "App\Models\DVD" => "movie.svg",
-            "App\Models\Book" => "book.png",
-            "App\Models\Furniture" => "furniture.svg",
+            "DVD" => "movie.svg",
+            "Book" => "book.png",
+            "Furniture" => "furniture.svg",
             default => "no-product-found.png",
         };
     }

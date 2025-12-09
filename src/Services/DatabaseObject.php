@@ -4,6 +4,9 @@ namespace App\Services;
 
 use PDO;
 use PDOException;
+use App\Models\DVD;
+use App\Models\Book;
+use App\Models\Furniture;
 
 abstract class DatabaseObject
 {
@@ -26,27 +29,26 @@ abstract class DatabaseObject
     }
 
     // Find record by ID
-    public static function findById($id_column, $id_value)
+    public static function findById(string $id_column, int $id_value, bool $asObject = false)
     {
-        $sql = "SELECT * FROM " . static::$table_name;
-        $sql .= " WHERE " . $id_column . " = :id";
-        $stmt = self::$db->prepare($sql);
-        $stmt->bindValue(':id', $id_value);
-        $stmt->execute();
-        $obj_array = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $sql = "SELECT Products.*, Category.category_name
+                FROM " . static::$table_name . "
+                LEFT JOIN Category 
+                ON Products.category_id = Category.category_id
+                WHERE " . $id_column . " = :id";
 
-        if (!empty($obj_array)) {
-            $class_name = get_called_class();
-            return new $class_name($obj_array[0]);
-        } else {
-            return false;
-        }
+        $data =  static::findBySQL($sql, [$id_value], $asObject);
+
+        return $data;
     }
 
     // GET ALL RECORDS
     public static function getAll()
     {
-        $sql = "SELECT * FROM " . static::$table_name;
+        $sql = "SELECT Products.*, Category.category_name
+        FROM " . static::$table_name . "
+        LEFT JOIN Category 
+        ON Products.category_id = Category.category_id";
         return static::findBySQL($sql);
     }
 
@@ -65,8 +67,10 @@ abstract class DatabaseObject
             }
 
             if ($asObjects) {
-                $class = get_called_class();
-                return array_map(fn($row) => new $class($row), $rows);
+                return array_map(function ($row) {
+                    $className = "\\App\\Models\\" . $row['category_name'];
+                    return new $className($row);
+                }, $rows);
             }
 
             return $rows;
@@ -88,6 +92,7 @@ abstract class DatabaseObject
     protected function create()
     {
         $attributes = $this->attributes();
+        unset($attributes['category_name']);
         $cols = array_keys($attributes);
         $placeholders = array_fill(0, count($cols), '?');
 
@@ -112,8 +117,8 @@ abstract class DatabaseObject
     protected function update()
     {
         $attributes = $this->attributes();
+        unset($attributes['category_name']);
         $cols = array_keys($attributes);
-
         $assignments = implode(', ', array_map(fn($col) => "$col = ?", $cols));
 
         $sql = "UPDATE " . static::$table_name

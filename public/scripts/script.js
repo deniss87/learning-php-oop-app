@@ -1,41 +1,79 @@
-function showProductSpecs() {
-  const listLength = document.querySelectorAll("#productType option").length;
-  const selectedId = document.querySelector("option:checked").value;
-  const selectedName = document.querySelectorAll("#productType > option")[
-    selectedId
-  ].innerText;
-
-  for (let i = 1; i < listLength; i++) {
-    let name = document.querySelectorAll("#productType > option")[i].innerText;
-    let id = document.querySelectorAll("#productType > option")[i].value;
-
-    if (name !== selectedName) {
-      document.getElementById(name).style.display = "none";
-      // remove 'required' attribute from selected category fields
-      let inputRequiredCount = document.querySelectorAll(
-        `#${name} > input`,
-      ).length;
-      let inputRequired = document.querySelectorAll(`#${name} > input`);
-      for (let c = 0; c < inputRequiredCount; c++) {
-        requiredId = document.querySelectorAll(`#${name} > input`)[c].id;
-        document.getElementById(requiredId).removeAttribute("required");
-      }
-    } else {
-      document.getElementById(name).style.display = "block";
-      // set 'required' attribute to selected category fields
-      let inputRequiredCount = document.querySelectorAll(
-        `#${name} > input`,
-      ).length;
-      let inputRequired = document.querySelectorAll(`#${name} > input`);
-      for (let c = 0; c < inputRequiredCount; c++) {
-        requiredId = document.querySelectorAll(`#${name} > input`)[c].id;
-        document.getElementById(requiredId).setAttribute("required", "");
-      }
-    }
-  }
-}
 function formSubmit(formId) {
   return document.getElementById(formId).submit();
+}
+
+function submitAction(formId) {
+  const form = document.getElementById(formId);
+  const checked = Array.from(
+    document.querySelectorAll(".delete-checkbox:checked"),
+  );
+
+  if (checked.length === 0) {
+    alert("Please select product(s).");
+    return;
+  }
+
+  if (formId === "formEdit" && checked.length !== 1) {
+    alert("Please select exactly one product to edit.");
+    return;
+  }
+
+  form.querySelectorAll("input[name='product[]']").forEach((el) => el.remove());
+
+  checked.forEach((cb) => {
+    const input = document.createElement("input");
+    input.type = "hidden";
+    input.name = "product[]";
+    input.value = cb.value;
+    form.appendChild(input);
+  });
+
+  form.submit();
+}
+
+function updateActionButtons() {
+  const items = document.querySelectorAll(".product-item");
+  const editBtn = document.getElementById("edit-product-btn");
+  const deleteBtn = document.getElementById("delete-product-btn");
+
+  const checkedCount = Array.from(items).filter((item) => {
+    const cb = item.querySelector(".delete-checkbox");
+    return cb && cb.checked;
+  }).length;
+
+  if (checkedCount === 0) {
+    editBtn.disabled = true;
+    deleteBtn.disabled = true;
+  } else if (checkedCount === 1) {
+    editBtn.disabled = false;
+    deleteBtn.disabled = false;
+  } else {
+    editBtn.disabled = true;
+    deleteBtn.disabled = false;
+  }
+}
+
+function showProductSpecs() {
+  const select = document.getElementById("productType");
+  const selectedId = select.value;
+  const selectedName = select.options[select.selectedIndex].text.trim();
+
+  const categories = ["DVD", "Furniture", "Book"];
+
+  categories.forEach((cat) => {
+    const block = document.getElementById(cat);
+    if (!block) return;
+
+    const inputs = block.querySelectorAll("input");
+
+    if (cat.toLowerCase() === selectedName.toLowerCase()) {
+      block.style.display = "block";
+      inputs.forEach((i) => i.setAttribute("required", ""));
+    } else {
+      block.style.display = "none";
+      inputs.forEach((i) => i.removeAttribute("required"));
+    }
+  });
 }
 
 function formVerify() {
@@ -60,6 +98,7 @@ function formVerify() {
   }
   formSubmit("product_form");
 }
+
 function formSortSelect() {
   const UrlSortValue = new URLSearchParams(window.location.search).get("sort");
   if (UrlSortValue !== null) {
@@ -81,7 +120,6 @@ document.addEventListener("DOMContentLoaded", () => {
   items.forEach((item) => {
     item.addEventListener("click", () => {
       const checkbox = item.querySelector(".delete-checkbox");
-
       checkbox.checked = !checkbox.checked;
 
       if (checkbox.checked) {
@@ -89,6 +127,10 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
         item.classList.remove("active");
       }
+
+      updateActionButtons();
     });
   });
+
+  updateActionButtons();
 });

@@ -37,11 +37,6 @@ class Product extends DatabaseObject
         $this->product_name  = $args['product_name']  ?? null;
         $this->product_price = $args['product_price'] ?? null;
         $this->category_id   = $args['category_id']   ?? null;
-
-        if (!empty($this->category_id)) {
-            $category = Category::getCategoryName($this->category_id);
-            $this->category_name = $category ?? null;
-        }
     }
 
     public function getName(): string
@@ -52,6 +47,17 @@ class Product extends DatabaseObject
     public static function getColumns(): array
     {
         return self::$db_columns;
+    }
+
+    public static function getProductById(int $id, bool $asObject = false)
+    {
+        $data = static::findByID('product_id', $id, $asObject);
+
+        if (empty($data)) {
+            return null;
+        }
+
+        return $data[0];
     }
 
     public static function createByCategory(array $data)
@@ -86,14 +92,22 @@ class Product extends DatabaseObject
                     ON Products.category_id = Category.category_id
                 ORDER BY Products.$sortColumn $sortOrder";
 
-        return static::findBySQL($sql);
+        return static::findBySQL($sql, [], true);
     }
 
-    public static function existsSKU(string $sku): bool
+    public static function existsSKU(string $sku, ?int $excludeId = null): bool
     {
-        $sql = "SELECT COUNT(*) as count FROM " . static::$table_name . " WHERE product_sku = ?";
-        $row = static::findBySQL($sql, [$sku]);
-        $count = $row[0]['count'] ?? 0;
-        return $count > 0;
+        $sql = "SELECT COUNT(*) FROM " . static::$table_name . " WHERE product_sku = :sku";
+        $params = [':sku' => $sku];
+
+        if ($excludeId) {
+            $sql .= " AND product_id != :id";
+            $params[':id'] = $excludeId;
+        }
+
+        $stmt = static::$db->prepare($sql);
+        $stmt->execute($params);
+
+        return $stmt->fetchColumn() > 0;
     }
 }
