@@ -2,12 +2,18 @@
 ├── config
 │   └── bootstrap.php
 ├── public
+│   ├── actions
+│   │   ├── delete.php
+│   │   └── edit.php
 │   ├── add-product
 │   │   └── index.php
 │   ├── css
-│   │   ├── add.css
-│   │   ├── index.css
-│   │   └── main.css
+│   │   ├── globals.css
+│   │   ├── main.css
+│   │   ├── product-add.css
+│   │   └── product-list.css
+│   ├── edit-product
+│   │   └── index.php
 │   ├── images
 │   │   ├── book.png
 │   │   ├── furniture.svg
@@ -15,6 +21,10 @@
 │   │   └── no-product-found.png
 │   ├── scripts
 │   │   └── script.js
+│   ├── shared
+│   │   ├── footer.php
+│   │   ├── header.php
+│   │   └── no-product.php
 │   └── index.php
 ├── src
 │   ├── Helpers
@@ -37,6 +47,7 @@
 ├── .gitignore
 ├── .phpcs.xml
 ├── README.md
+├── schema.sql
 └── structure.txt
 
-12 directories, 28 files
+15 directories, 36 files
