@@ -70,20 +70,41 @@ $categoryList = Category::getAll();
         
       <div class="grid-item"> 
           <label for="sku">SKU:</label>
-          <input type="text" id="sku" name="product[product_sku]" inputname="SKU"
-          value="<?=htmlspecialchars($args['product_sku'])?>" required><br><br>
+          <input 
+            type="text"
+            id="sku"
+            name="product[product_sku]"
+            inputname="SKU"
+            value="<?=htmlspecialchars($args['product_sku'])?>" 
+            required
+          >
       </div>
 
       <div class="grid-item"> 
           <label for="name">Name:</label>
-          <input type="text" id="name" name="product[product_name]" inputname="Name"
-          value="<?=htmlspecialchars($args['product_name'])?>" required><br><br>
+          <input 
+            type="text"
+            id="name"
+            name="product[product_name]"
+            inputname="Name"
+            value="<?=htmlspecialchars($args['product_name'])?>" 
+            required
+          >
       </div>
 
       <div class="grid-item"> 
           <label for="price">Price ($):</label>
-          <input type="number" id="price" name="product[product_price]" inputname="Price"
-          value="<?=htmlspecialchars($args['product_price'])?>" required><br><br>
+          <input 
+            type="number" 
+            id="price" 
+            name="product[product_price]" 
+            inputname="Price" 
+            min="0" 
+            step="0.01" 
+            onkeypress="return !['e','E','-','+'].includes(event.key)"
+            value="<?=htmlspecialchars($args['product_price'])?>" 
+            required
+          >
       </div>
 
       <div class="grid-item"> 
@@ -106,16 +127,32 @@ $categoryList = Category::getAll();
               <p class="product-type-desc">Please, provide product size in MB</p>
 
               <label for="size">Size (MB):</label>
-              <input type="number" id="size" name="product[product_size]" inputname="Size"
-              value="<?=htmlspecialchars($args['product_size'])?>">
+              <input 
+                type="number" 
+                id="size" 
+                name="product[product_size]" 
+                inputname="Size" 
+                min="0" 
+                step="0.01"
+                onkeypress="return !['e','E','-','+'].includes(event.key)"
+                value="<?=htmlspecialchars($args['product_size'])?>"
+              >
       </div>
 
       <div id="Book">
               <p class="product-type-desc">Please, provide weight in KG</p>
 
               <label for="weight">Weight (KG):</label>
-              <input type="number" id="weight" name="product[product_weight]" inputname="Weight"
-              value="<?=htmlspecialchars($args['product_weight'])?>"><br>
+              <input 
+                type="number" 
+                id="weight" 
+                name="product[product_weight]" 
+                inputname="Weight" 
+                min="0" 
+                step="0.01"
+                onkeypress="return !['e','E','-','+'].includes(event.key)"
+                value="<?=htmlspecialchars($args['product_weight'])?>"
+              >
               
       </div>
 
@@ -124,16 +161,40 @@ $categoryList = Category::getAll();
               <p class="product-type-desc">Please, provide dimensions in H x W x L format</p>
 
               <label for="height">Height (cm):</label>
-              <input type="number" id="height" name="product[product_height]" inputname="Height"
-              value="<?=htmlspecialchars($args['product_height'])?>">
+              <input 
+                type="number" 
+                id="height" 
+                name="product[product_height]" 
+                inputname="Height" 
+                min="0" 
+                step="0.01"
+                onkeypress="return !['e','E','-','+'].includes(event.key)"
+                value="<?=htmlspecialchars($args['product_height'])?>"
+              >
 
               <label for="width">Width (cm):</label>
-              <input type="number" id="width" name="product[product_width]" inputname="Width"
-              value="<?=htmlspecialchars($args['product_width'])?>">
+              <input 
+                type="number" 
+                id="width" 
+                name="product[product_width]" 
+                inputname="Width" 
+                min="0" 
+                step="0.01"
+                onkeypress="return !['e','E','-','+'].includes(event.key)"
+                value="<?=htmlspecialchars($args['product_width'])?>"
+              >
               
               <label for="length">Length (cm):</label>
-              <input type="number" id="length" name="product[product_length]" inputname="Length"
-              value="<?=htmlspecialchars($args['product_length'])?>">
+              <input 
+                type="number" 
+                id="length" 
+                name="product[product_length]" 
+                inputname="Length" 
+                min="0" 
+                step="0.01"
+                onkeypress="return !['e','E','-','+'].includes(event.key)"
+                value="<?=htmlspecialchars($args['product_length'])?>"
+              >
 
         </div>
       </form>
