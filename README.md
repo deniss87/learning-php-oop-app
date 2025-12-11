@@ -72,4 +72,4 @@ Developed as part of a learning project focusing on PHP OOP, MySQL integration, 
    ```
 
 5. ### 🌐 Open the application in the browser
-   http://localhost/
+   http://localhost/learning-php-oop-app/public/
