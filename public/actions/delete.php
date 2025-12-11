@@ -10,6 +10,12 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
+if (empty($_POST['csrf_token']) || !verifyCSRFToken($_POST['csrf_token'])) {
+    $_SESSION['error'] = "Invalid CSRF token.";
+    header("Location: ../");
+    exit;
+}
+
 if (empty($_POST['product']) || !is_array($_POST['product'])) {
     $_SESSION['error'] = "Please select products.";
     header("Location: ../");

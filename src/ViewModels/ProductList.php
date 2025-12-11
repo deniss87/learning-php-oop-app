@@ -47,19 +47,31 @@ class ProductList
 
     public function preview(): string
     {
-        $image = $this->getImage();
-        $specs = $this->getSpecs();
+        $id    = e($this->product_id);
+        $sku   = e($this->product_sku);
+        $name  = e($this->product_name);
+        $price = number_format((float)$this->product_price, 2);
+
+        $specsRaw = $this->getSpecs();
+        $specs = e($specsRaw);
+
+        $imageRaw = $this->getImage();
+        $imageSafe = e($imageRaw);
+        $imagePath = __DIR__ . "/../../public/images/" . $imageRaw;
+        if (!file_exists($imagePath)) {
+            $imageSafe = "no-product-found.png";
+        }
 
         return "
             <label class='checkbox-wrapper'>
-              <input type='checkbox' id='{$this->product_id}' class='delete-checkbox'
-              name='product[]' value='{$this->product_id}'>
+              <input type='checkbox' id='{$id}' class='delete-checkbox'
+              name='product[]' value='{$id}'>
               <span class='checkbox-custom'></span>
             </label>
-            <img src='./images/{$image}'>
-            <p>SKU: {$this->product_sku}</p>
-            <p><b>{$this->product_name}</b></p>
-            <p>{$this->product_price} $</p>
+            <img src='./images/{$imageSafe}' alt='product image'>
+            <p>SKU: {$sku}</p>
+            <p><b>{$name}</b></p>
+            <p>{$price} $</p>
             <p>{$specs}</p>    
         ";
     }

@@ -3,9 +3,13 @@
 session_start();
 require_once __DIR__ . '/../../config/bootstrap.php';
 
-use App\Models\Product;
-
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    header("Location: ../");
+    exit;
+}
+
+if (empty($_POST['csrf_token']) || !verifyCSRFToken($_POST['csrf_token'])) {
+    $_SESSION['error'] = "Invalid CSRF token.";
     header("Location: ../");
     exit;
 }

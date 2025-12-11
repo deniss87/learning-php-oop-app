@@ -75,7 +75,7 @@ $categoryList = Category::getAll();
             id="sku"
             name="product[product_sku]"
             inputname="SKU"
-            value="<?=htmlspecialchars($args['product_sku'])?>" 
+            value="<?=e($args['product_sku'])?>" 
             required
           >
       </div>
@@ -87,7 +87,7 @@ $categoryList = Category::getAll();
             id="name"
             name="product[product_name]"
             inputname="Name"
-            value="<?=htmlspecialchars($args['product_name'])?>" 
+            value="<?=e($args['product_name'])?>" 
             required
           >
       </div>
@@ -102,7 +102,7 @@ $categoryList = Category::getAll();
             min="0" 
             step="0.01" 
             onkeypress="return !['e','E','-','+'].includes(event.key)"
-            value="<?=htmlspecialchars($args['product_price'])?>" 
+            value="<?=e($args['product_price'])?>" 
             required
           >
       </div>
@@ -117,7 +117,7 @@ $categoryList = Category::getAll();
                 $args['category_id'] === $category['category_id']
                       ? $tag = 'selected'
                       : $tag = '';
-                echo '<option value="' . $category['category_id'] . '" ' . $tag . '  >' . $category['category_name'] . '</option>';
+                echo '<option value="' . e($category['category_id']) . '" ' . $tag . '  >' . e($category['category_name']) . '</option>';
             }
             ?>
           </select>
@@ -135,7 +135,7 @@ $categoryList = Category::getAll();
                 min="0" 
                 step="0.01"
                 onkeypress="return !['e','E','-','+'].includes(event.key)"
-                value="<?=htmlspecialchars($args['product_size'])?>"
+                value="<?=e($args['product_size'])?>"
               >
       </div>
 
@@ -151,7 +151,7 @@ $categoryList = Category::getAll();
                 min="0" 
                 step="0.01"
                 onkeypress="return !['e','E','-','+'].includes(event.key)"
-                value="<?=htmlspecialchars($args['product_weight'])?>"
+                value="<?=e($args['product_weight'])?>"
               >
               
       </div>
@@ -169,7 +169,7 @@ $categoryList = Category::getAll();
                 min="0" 
                 step="0.01"
                 onkeypress="return !['e','E','-','+'].includes(event.key)"
-                value="<?=htmlspecialchars($args['product_height'])?>"
+                value="<?=e($args['product_height'])?>"
               >
 
               <label for="width">Width (cm):</label>
@@ -181,7 +181,7 @@ $categoryList = Category::getAll();
                 min="0" 
                 step="0.01"
                 onkeypress="return !['e','E','-','+'].includes(event.key)"
-                value="<?=htmlspecialchars($args['product_width'])?>"
+                value="<?=e($args['product_width'])?>"
               >
               
               <label for="length">Length (cm):</label>
@@ -193,7 +193,7 @@ $categoryList = Category::getAll();
                 min="0" 
                 step="0.01"
                 onkeypress="return !['e','E','-','+'].includes(event.key)"
-                value="<?=htmlspecialchars($args['product_length'])?>"
+                value="<?=e($args['product_length'])?>"
               >
 
         </div>

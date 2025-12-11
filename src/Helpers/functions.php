@@ -6,11 +6,11 @@ use App\ViewModels\ProductList;
 function flashMessages()
 {
     if (isset($_SESSION["success"])) {
-        echo('<div class="message-success"><p>' . htmlentities($_SESSION["success"]) . "</p></div>\n");
+        echo('<div class="message-success"><p>' . e($_SESSION["success"]) . "</p></div>\n");
         unset($_SESSION["success"]);
     }
     if (isset($_SESSION["error"])) {
-        echo('<div class="message-error"><p>' . htmlentities($_SESSION["error"]) . "</p></div>\n");
+        echo('<div class="message-error"><p>' . e($_SESSION["error"]) . "</p></div>\n");
         unset($_SESSION["error"]);
     }
 }
@@ -70,4 +70,23 @@ function getSortedProductList(): array
     );
 
     return $productObjects;
+}
+
+function e($value)
+{
+    return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+}
+
+
+function generateCSRFToken(): string
+{
+    if (empty($_SESSION['csrf_token'])) {
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    }
+    return $_SESSION['csrf_token'];
+}
+
+function verifyCSRFToken(string $token): bool
+{
+    return isset($_SESSION['csrf_token']) && hash_equals($_SESSION['csrf_token'], $token);
 }
