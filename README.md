@@ -42,27 +42,34 @@ Developed as part of a learning project focusing on PHP OOP, MySQL integration, 
 ## 🚀 How to Run
 
 > ⚠️ **Important:**  
-> This project requires a **local web server** (e.g., Apache, Nginx), **PHP**, and **MySQL**.
+> This project requires a **local web server** (e.g., Apache, Nginx), **PHP**, **MySQL** and **Composer**.
 
-1. **Clone the repository** into the directory served by your web server (document root).
+1. ### 📥 Clone the repository into the directory served by your web server (document root)
    ```bash
    git clone https://github.com/deniss87/learning-php-oop-app
+   cd learning-php-oop-app
    ```
-2. **Create the database and import the table structure**.  
-   Make sure to add initial records in the `Category` table so that product types are available.  
-   _You can **create a database and tables** with the required data by importing the **`db_schema.sql`** file._
+2. ### 📦 Install PHP dependencies (Composer)
+
+   ```
+   composer install
+   ```
+
+3. ### 🗄️ Create database & import schema + initial data
+
+   Make sure to **add initial records** in the `Category` table so that product types are available.
+
+   #### _You can **create a database and tables** with the required data by importing the **`db_schema.sql`** file_
 
    ```
    mysql -u root -p < db_schema.sql
    ```
 
-3. **Configure environment variables** in the .env file, including database credentials.
+4. ### 🔐 Configure environment variables including database credentials.
 
    ```
-   DB_SERVER=127.0.0.1
-   DB_NAME=php_oop_crud_app
-   DB_USER=
-   DB_PWD=
+   cp .env.example .env
    ```
 
-4. Open the site in your browser by navigating to your local server URL (e.g., http://localhost/)
+5. ### 🌐 Open the application in the browser
+   http://localhost/
