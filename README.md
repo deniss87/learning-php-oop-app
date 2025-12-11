@@ -44,7 +44,7 @@ Developed as part of a learning project focusing on PHP OOP, MySQL integration, 
 > ⚠️ **Important:**  
 > This project requires a **local web server** (e.g., Apache, Nginx), **PHP**, **MySQL** and **Composer**.
 
-1. ### 📥 Clone the repository into the directory served by your web server (document root)
+1. ### 📥 Clone the repository into the directory served by your web server
    ```bash
    git clone https://github.com/deniss87/learning-php-oop-app
    cd learning-php-oop-app
@@ -72,4 +72,4 @@ Developed as part of a learning project focusing on PHP OOP, MySQL integration, 
    ```
 
 5. ### 🌐 Open the application in the browser
-   http://localhost/
+   http://localhost/learning-php-oop-app/public/
