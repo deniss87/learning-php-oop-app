@@ -39,6 +39,12 @@ Developed as part of a learning project focusing on PHP OOP, MySQL integration, 
 
 ---
 
+## 📸 Preview
+
+![Preview](https://github.com/deniss87/deniss87/blob/main/assets/images/php-oop-app/php-oop-app-preview.png)
+
+---
+
 ## 🚀 How to Run
 
 > ⚠️ **Important:**  
